@@ -22,6 +22,8 @@ iteration_high: upper limit for the random integer selection for number of itera
 (Default 5)
 fill_holes: whether to fill holes of output mask (especially helpful for boundaries with multilabel masks)
 (Default False)
+fill_holes_iterations: how many iterations of how filling to perform
+(Default 1 iterations)
 allow_missing_keys: don't raise exception if key is missing.
 verbose: enable verbose mode for debugging.
 seed: random seed for the generator.
@@ -30,7 +32,7 @@ seed: random seed for the generator.
 ## Example use
 A Jupyter Notebook with example use case for a multi-channel brain tumour segmentation is available in [example_use.ipynb](example_use.ipynb). A sample image of this is shown below.
 
-![sample_image](sample_image.png)
+![sample_image](sample_data/sample_image.png)
 
 The lesion segmentation is from the [GitHub repo here](https://github.com/high-dimensional/tumour-seg and accompanying [article](https://doi.org/10.1093/braincomms/fcad118):
 ```
@@ -38,4 +40,4 @@ Ruffle JK, Mohinta S, Gray R, Hyare H, Nachev P. Brain tumour segmentation with 
 ```
 
 ## Use queries
-Via github issue log or email to j.ruffle@ucl.ac.uk
+Via GitHub issue log or email to j.ruffle@ucl.ac.uk

@@ -34,6 +34,7 @@ class BinaryErosiond(RandomizableTransform, MapTransform):
         iteration_high: int = 5,
         vary_across_channels: bool = False,
         fill_holes: bool = False,
+        fill_holes_iterations: int = 1,
         allow_missing_keys: bool = True,
         verbose: bool = False,
         seed: int = 0,
@@ -57,6 +58,8 @@ class BinaryErosiond(RandomizableTransform, MapTransform):
                 (Default False - i.e., number of iterations in Binary Erosion will be the same across all keys)
             fill_holes: whether to fill holes of output mask (especially helpful for boundaries with multilabel masks)
                 (Default False)
+            fill_holes_iterations: how many iterations of how filling to perform
+                (Default 1 iterations)
             allow_missing_keys: don't raise exception if key is missing.
             verbose: enable verbose mode for debugging.
             seed: random seed for the generator.
@@ -72,6 +75,7 @@ class BinaryErosiond(RandomizableTransform, MapTransform):
         self.iteration_low = iteration_low
         self.iteration_high = iteration_high
         self.fill_holes = fill_holes
+        self.fill_holes_iterations = fill_holes_iterations
         self.vary_across_channels = vary_across_channels
         self.verbose = verbose
         self.seed = seed
@@ -138,7 +142,8 @@ class BinaryErosiond(RandomizableTransform, MapTransform):
                         if self.fill_holes:
                             if self.verbose:
                                 print('Filling holes in mask')
-                            d[key].array = scipy.ndimage.binary_fill_holes(d[key])
+                            for fill_holes_iterations in range(self.fill_holes_iterations):
+                                d[key].array = scipy.ndimage.binary_fill_holes(d[key])
 
             return d
 
@@ -158,6 +163,7 @@ class BinaryDilationd(RandomizableTransform, MapTransform):
         iteration_high: int = 5,
         vary_across_channels: bool = False,
         fill_holes: bool = False,
+        fill_holes_iterations: int = 1,
         allow_missing_keys: bool = True,
         verbose: bool = False,
         seed: int = 0,
@@ -181,6 +187,8 @@ class BinaryDilationd(RandomizableTransform, MapTransform):
                 (Default False - i.e., number of iterations in Binary Dilation will be the same across all keys)
             fill_holes: whether to fill holes of output mask (especially helpful for boundaries with multilabel masks)
                 (Default False)
+            fill_holes_iterations: how many iterations of how filling to perform
+                (Default 1 iterations)
             allow_missing_keys: don't raise exception if key is missing.
             verbose: enable verbose mode for debugging.
             seed: random seed for the generator.
@@ -196,6 +204,7 @@ class BinaryDilationd(RandomizableTransform, MapTransform):
         self.iteration_low = iteration_low
         self.iteration_high = iteration_high
         self.fill_holes = fill_holes
+        self.fill_holes_iterations = fill_holes_iterations
         self.vary_across_channels = vary_across_channels
         self.verbose = verbose
         self.seed = seed
@@ -261,6 +270,7 @@ class BinaryDilationd(RandomizableTransform, MapTransform):
                         if self.fill_holes:
                             if self.verbose:
                                 print('Filling holes in mask')
-                            d[key].array = scipy.ndimage.binary_fill_holes(d[key])
+                            for fill_holes_iterations in range(self.fill_holes_iterations):
+                                d[key].array = scipy.ndimage.binary_fill_holes(d[key])
                             
             return d
