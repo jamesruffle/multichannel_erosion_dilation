@@ -406,8 +406,12 @@ class GreyDilationd(RandomizableTransform, MapTransform):
                         key_dict_counter+=1
                 if self.verbose:
                     print('multi_key_complete, unique values: '+str(np.unique(multi_key)))
-                multi_key = scipy.ndimage.grey_dilation(multi_key,size=(self.size,self.size,self.size))
-                
+                    print('multi_key shape: '+str(multi_key.shape))
+                if len(multi_key.shape)>3: ###if running older version of MONAI with the trailing image channel
+                    multi_key = scipy.ndimage.grey_dilation(multi_key,size=(1,self.size,self.size,self.size))
+                if len(multi_key.shape)<4: #in newer versions of MONAI where AddChanneld may not be added in the transforms
+                    multi_key = scipy.ndimage.grey_dilation(multi_key,size=(self.size,self.size,self.size))
+                    
                 if self.verbose:
                     print('grey process complete, now recasting to individual keys')
                 for key in self.keys:
@@ -549,7 +553,11 @@ class GreyErosiond(RandomizableTransform, MapTransform):
                         key_dict_counter+=1
                 if self.verbose:
                     print('multi_key_complete, unique values: '+str(np.unique(multi_key)))
-                multi_key = scipy.ndimage.grey_erosion(multi_key,size=(self.size,self.size,self.size))
+                    print('multi_key shape: '+str(multi_key.shape))
+                if len(multi_key.shape)>3: ###if running older version of MONAI with the trailing image channel
+                    multi_key = scipy.ndimage.grey_dilation(multi_key,size=(1,self.size,self.size,self.size))
+                if len(multi_key.shape)<4: #in newer versions of MONAI where AddChanneld may not be added in the transforms
+                    multi_key = scipy.ndimage.grey_dilation(multi_key,size=(self.size,self.size,self.size))
                 
                 if self.verbose:
                     print('grey process complete, now recasting to individual keys')
